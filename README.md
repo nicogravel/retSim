@@ -10,7 +10,7 @@ This is a wrapper for [stimBOLD](https://github.com/KevinAquino/stimBOLD)
 3. Mapping from the retina to V1 (input: retinal response, output: retinal outputs). 
 4. Estimation of neural response in V2 and V3 (input: retinal outputs, output: neural activity, neural inputs).
 5. Calculation of neural drive (input: neural activity, neural inputs, output: input of hemodynamic model).
-6. Hemodynamic model (stHRF, output: spatio-temporal BOLD).
+6. Hemodynamic model (st-HRF, output: spatio-temporal BOLD).
 7. Projection to cortical surface reconstruction mesh.
 8. Projection to model of the foveal confluence.
 
