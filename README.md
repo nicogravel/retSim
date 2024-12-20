@@ -5,14 +5,14 @@
 This is a wrapper for [stimBOLD](https://github.com/KevinAquino/stimBOLD)
 
 
-1. Retinal processing using retinal template (input: image, output: blurred image )
-2. Estimation of retinal contrast response function based on luminance (input: blurred image, output: retinal response)
-3. Mapping from the retina to V1 (input: retinal response, output: retinal outputs) 
-4. Estimation of neural response in V2 and V3 (input: retinal outputs, output: neural activity, neural inputs)
-5. Calculation of neural drive (input: neural activity, neural inputs, output: input of hemodynamic model)
-6. Hemodynamic model (stHRF, output: spatio-temporal BOLD)
-7. Projection to cortical surface reconstruction mesh
-8. Projection to model of the foveal confluence model
+1. Retinal processing using retinal template (input: image, output: blurred image).
+2. Estimation of retinal contrast response function based on luminance (input: blurred image, output: retinal response).
+3. Mapping from the retina to V1 (input: retinal response, output: retinal outputs). 
+4. Estimation of neural response in V2 and V3 (input: retinal outputs, output: neural activity, neural inputs).
+5. Calculation of neural drive (input: neural activity, neural inputs, output: input of hemodynamic model).
+6. Hemodynamic model (stHRF, output: spatio-temporal BOLD).
+7. Projection to cortical surface reconstruction mesh.
+8. Projection to model of the foveal confluence.
 
 
 The first part (points 1-5) has been pre-run (file: stimBOLD_neural_20dec2024.mat). The conversion to BOLD using the spatio-temporal HRF takes a long time to run.
