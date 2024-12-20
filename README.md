@@ -33,7 +33,7 @@ The first part (points 1-5) has been pre-run (file: stimBOLD_neural_20dec2024.ma
 
 |<img src="https://github.com/nicogravel/retSim/blob/main/figures/barMap_Schwartz.png" width=50%>|
 |:--:|
-| **Cortical BOLD response projected on the Schwartz model of the foveal confluence.** Hemodynamic responses to drifting bar stimuli depicted on the Schwartz model of the foveal confluence. [Cick here for video](https://drive.google.com/file/d/1uSTpQjf0pSlLYJeW-Iz0umAtCfez18K_/view?usp=sharing).|
+| **Cortical BOLD response projected on the Schwartz model of the foveal confluence.** Spatio-temporal hemodynamic wave-like responses to the drifting bar stimuli unfold across the V1-V2-V3 hierarchy by mirroring inter-areal homotopy. [Cick here for video](https://drive.google.com/file/d/1uSTpQjf0pSlLYJeW-Iz0umAtCfez18K_/view?usp=sharing).|
 
 
 
