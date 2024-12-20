@@ -25,7 +25,7 @@ The first part (points 1-5) has been pre-run (file: stimBOLD_neural_20dec2024.ma
 
 
 
-|<img src="https://github.com/nicogravel/retSim/blob/main/figures/bbarMap_cortex.png" width=100%>|
+|<img src="https://github.com/nicogravel/retSim/blob/main/figures/barMap_cortex.png" width=100%>|
 |:--:|
 | **Cortical BOLD response.** Hemodynamic responses to drifting bar stimuli depicted on Freesurfer's *fsaverage* cortical surfcace template. Neuronal responses on cortex were approximated using a  mean field model of retino-cortical input resulting on a stimuli-dependent neuronal drive of V1, V2 and V3. The resulting neuronal drive were translated to BOLD activity using a spatiotemporal hemodynamic response function (st-HRF). [Cick here for video](https://drive.google.com/file/d/17JkrsSYfcZkWn2gZsGGb1wURvY_gLqTL/view?usp=sharing).|
 
