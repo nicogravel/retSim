@@ -33,5 +33,5 @@ The first part (points 1-5) has been pre-run (file: stimBOLD_neural_20dec2024.ma
 
 |<img src="https://github.com/nicogravel/retSim/blob/main/figures/barMap_Schwartz.png" width=100%>|
 |:--:|
-| **Cortical BOLD response projected on the Schwartz model of the foveal confluence model.** Hemodynamic responses to drifting bar stimuli depicted on the Schwartz model of the foveal confluence. [Cick here for video](https://drive.google.com/file/d/1uSTpQjf0pSlLYJeW-Iz0umAtCfez18K_/view?usp=sharing).|
+| **Cortical BOLD response projected on the Schwartz model of the foveal confluence.** Hemodynamic responses to drifting bar stimuli depicted on the Schwartz model of the foveal confluence. [Cick here for video](https://drive.google.com/file/d/1uSTpQjf0pSlLYJeW-Iz0umAtCfez18K_/view?usp=sharing).|
 
