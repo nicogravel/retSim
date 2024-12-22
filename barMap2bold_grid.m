@@ -34,7 +34,7 @@ cdiv = 5
 
 
 %% Load simulated BOLD responses 
-load([pth, 'outputs/stimBOLD_bold.mat'])
+load([pth, 'outputs/stimBOLD_output.mat'])
 msh = stimBOLD_output.msh;
 [msh,retinotopicTemplate] = load_cortical_template(stimBOLD_output.params);
 
@@ -179,7 +179,7 @@ print(gcf, [pth, 'figures\tSeries_',model,  '.png'], '-dpng', '-r150', '-painter
 
 
 %%  BOLD time flow simulation
-v = VideoWriter('barMap2bold_FovealConfluence.avi');
+v = VideoWriter('barMap2bold_FovealConfluence_.avi');
 open(v)
 figure,
 pos = get(gcf, 'Position');

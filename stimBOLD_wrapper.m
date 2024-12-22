@@ -12,10 +12,10 @@
 
 clear all
 
-cd '/home/nicolas/Documents/GitHubProjects/retSim/stimBOLD-retSim/'
+cd '/home/nicolas/Documents/GitHubProjects/retSim/tools/stimBOLD-retSim/'
 
 out_pth = '/home/nicolas/Documents/GitHubProjects/retSim/outputs/'
-filename = '/visualStimuli/barMap/barMap.avi';  
+filename = '/visualStimuli/barMap/barMap.avi';  % Just the frames we need
 
 % Add the current directory of stimBOLD to the path (and all its subfolders)
 addpath(genpath(pwd));
@@ -43,9 +43,12 @@ nFrames = data_in.NumberOfFrames;
 
 
 %rateFrames = data_in.FrameRate;
-rateFrames = 1.5; data_in.FrameRate;  % framerate has been decreased 20 times
+rateFrames = 1.5; 
+data_in.FrameRate;  % framerate has been decreased 20 times
 
-time_cell =(0:nFrames-1)/rateFrames;
+skipFrames = 0;
+
+time_cell =(skipFrames:nFrames-1)/rateFrames;
 time_cell =mat2cell_vs(time_cell);
 img_cell =cell(1, nFrames);
 
@@ -105,20 +108,21 @@ disp('Retinal Processing..')
 
 % Neural Response
 % ================
-tic
-disp('NeuralResponse..')
-[neuralActivity,neuralInputs,params,msh] = neuralResponse(msh,v1RetinalOutputs,retinotopicTemplate,params);
-toc
+% tic
+% disp('NeuralResponse..')
+% [neuralActivity,neuralInputs,params,msh] = neuralResponse(msh,v1RetinalOutputs,retinotopicTemplate,params);
+% toc
+% 
+% stimBOLD_neural.v1RetinalOutputs = v1RetinalOutputs;
+% stimBOLD_neural.retinotopicTemplate = retinotopicTemplate;
+% stimBOLD_neural.neuralActivity = neuralActivity;
+% stimBOLD_neural.neuralInputs = neuralInputs;
+% stimBOLD_neural.retinal_response = retinal_response;
+% stimBOLD_neural.params = params;
+% 
+% 
+% save([out_pth 'stimBOLD_neural.mat'],'stimBOLD_neural')
 
-stimBOLD_neural.v1RetinalOutputs = v1RetinalOutputs;
-stimBOLD_neural.retinotopicTemplate = retinotopicTemplate;
-stimBOLD_neural.neuralActivity = neuralActivity;
-stimBOLD_neural.neuralInputs = neuralInputs;
-stimBOLD_neural.retinal_response = retinal_response;
-stimBOLD_neural.params = params;
-
-
-save([out_pth 'stimBOLD_neural.mat'],'stimBOLD_neural')
 
 
 % Neural Drive Function (including neural responses)
@@ -135,7 +139,6 @@ tic
 disp('BOLD model')
 [BOLD] = hemodynamicModel(full(zeta),msh,params);
 toc
-
 
 stimBOLD_output.params = params;
 stimBOLD_output.BOLD = BOLD;

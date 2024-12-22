@@ -4,7 +4,7 @@
 
 
 
-The appeal to evidence that fMRI images provide is enticing and -understandably- lures our intuition into that sort of certainty that, even though a little vague sometimes, can further our scientific understanding of brain structure and function. However, in order to realize this potential, a question remains: How can we narrow our focus on neuronal activity if fMRI responses at different recording sites can be correlated as a result of neuroanatomical connections, or metabolic and hemodynamic relationships?  
+The appeal to evidence that fMRI images provide is enticing and -understandably- lures our intuition into a sense of certainty that, even though sometimes a little vague, can further our scientific understanding of brain structure and function. However, to realize this potential, a question remains: How can we narrow our focus on neuronal activity if fMRI responses at different recording sites can be correlated due to neuroanatomical connections, or metabolic and hemodynamic relationships?  
 
 In a recent study titled "Hemodynamic Traveling Waves in Human Visual Cortex" **[1]** , the authors set out to chart BOLD waves as they spread across the human visual cortex. Further research by the same team described the complex spatiotemporal organization of these cortical responses using a novel spatio-temporal hemodynamic response function **[2]**.
 
@@ -34,7 +34,7 @@ The goal of this repo is two-fold:
 First, you need Freesurfer in the path. Then you can source it:
   
 ```console
-export FREESURFER_HOME=/home/.../.../freesurfer-linux-ubuntu22_amd64-7.4.0/freesurfer
+export FREESURFER_HOME=/home/	.../freesurfer-linux-ubuntu22_amd64-7.4.0/freesurfer
 source $FREESURFER_HOME/SetUpFreeSurfer.sh
 ```
   

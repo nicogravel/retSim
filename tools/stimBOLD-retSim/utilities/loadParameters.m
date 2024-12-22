@@ -31,7 +31,7 @@ else
 end
 
 params.z_n = 0.1;                          % neural normalization constant
-params.t_0 = 2;                            % start Interval, i.e. when to start the stimulus
+params.t_0 = 0; % default=2;                            % start Interval, i.e. when to start the stimulus
 % params.stim_time = 2;0.5;                    % how long for each image
 % params.isi_time = 0;0.25;                    % how long between each image
 %
@@ -71,19 +71,20 @@ params.flowNoise = 0;
 
 % ============== Computational parameters ===================
 
-params.t_start = 0;                     % Start time for the simulation
-params.t_end = 44+2;                      % End time for the stimulation
-params.num_time = 500; % number of time points used in the calculation
+%params.t_start = 2;                     % Start time for the simulation 
+%params.t_end = 44+2;                      % End time for the stimulation
+params.num_time = 372;% default=500; % number of time points used in the calculation
+
 % params.dx = 0.5e-3;
 % params.dy = params.dx;             % just use this current dx and dy in mm
 % params.extra_cortex = 6e-3;             % how many mm of extra cortex in x and in y
 % params.y_bounds = 20e-3;                 % the distance from the origin to the max y.
 params.plotting = 0;
-params.dt = 0.05;
-params.time_afterStim = 20;              % right now set to 20 as the default user has to define this.
+params.dt = 0.05; %default=0.05;
+params.time_afterStim = 8; %default=20;              % right now set to 20 as the default user has to define this.
 
 
-params.MAX_SCREEN_EC = 5; % i.e. the maximum eccentricity that the screen is, this will be used to normalize it all.
+params.MAX_SCREEN_EC = 6; %default=5 i.e. the maximum eccentricity that the screen is, this will be used to normalize it all.
 params.polMappingDecay = 1; % This the parameter for the polar mapping decay function - probably should be based on physiology
 % need some help on this guy.
 
