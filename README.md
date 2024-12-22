@@ -4,9 +4,9 @@
 
 
 
-The appeal to evidence that fMRI images provide is enticing and -understandably- lures our intuition into that sort of certainty that, even though a little vague sometimes, can fuel our scientific curiosity even further. However, in order to realize this potential, the question remains: How can we narrow our focus on neuronal activity if fMRI responses at different recording sites can be correlated as a result of neuroanatomical connections, or metabolic and hemodynamic relationships?  
+The appeal to evidence that fMRI images provide is enticing and -understandably- lures our intuition into that sort of certainty that, even though a little vague sometimes, can further our scientific understanding of brain structure and function. However, in order to realize this potential, a question remains: How can we narrow our focus on neuronal activity if fMRI responses at different recording sites can be correlated as a result of neuroanatomical connections, or metabolic and hemodynamic relationships?  
 
-In a recent study titled "Hemodynamic Traveling Waves in Human Visual Cortex" **[1]** , a team of researchers from the Brain Dynamics Center at the Sydney Medical School in the University of Sydney, Australia set out to chart BOLD waves as they spread across the human visual cortex. Further research by the same team described the complex spatiotemporal organization of these cortical responses using a novel spatio-temporal hemodynamic response function **[2]**.
+In a recent study titled "Hemodynamic Traveling Waves in Human Visual Cortex" **[1]** , the authors set out to chart BOLD waves as they spread across the human visual cortex. Further research by the same team described the complex spatiotemporal organization of these cortical responses using a novel spatio-temporal hemodynamic response function **[2]**.
 
 
 
@@ -34,7 +34,7 @@ The goal of this repo is two-fold:
 First, you need Freesurfer in the path. Then you can source it:
   
 ```console
-export FREESURFER_HOME=/home/nicolas/Programas/freesurfer-linux-ubuntu22_amd64-7.4.0/freesurfer
+export FREESURFER_HOME=/home/.../.../freesurfer-linux-ubuntu22_amd64-7.4.0/freesurfer
 source $FREESURFER_HOME/SetUpFreeSurfer.sh
 ```
   
@@ -50,7 +50,7 @@ Third, you need to copy the barMap folder (the input stimuli *barMap_whole.avi* 
 cp -r barMap stimBOLD-master/visualStimuli
 ```
 
-Fourth, open the script *stimBOLD_wrapper.m* in Matlab and run until line 42. The last line will give you the number of frames in the *barMap_whole.avi* file. A few more frames have been incliuded after all the par sweeps, to illustrate the residual waves still unfolding after the stimulus have faded out, and as potentially baseline. 
+Fourth, open the script *stimBOLD_wrapper.m* in Matlab and run until line 42. The last line will give you the number of frames in the *barMap_whole.avi* file. A few more frames have been included after all the bar sweeps, to illustrate the residual waves still unfolding after the stimulus have faded out, and as potentially baseline. 
 
 From here onwards, you can go ahead running the scripts in chunks. For instance, first compute the visual inputs (blurring the image according to fixation, lines 68 to 77). Lines 86 to 93 are to load the retinal template and compute the retinal contrast response. Line 102 computes the cortical projection from retina to lateral geniculate nucleus (LGN) to V1. Line 110 computes the neural response in V1 and its retinotopic outputs to V2 and V3. Line 127 calculate the neural drive in V1, V2 and V3. These four steps take relatively little time. Line 136 implements the st-HRF in order to simulate the BOLD response. This last step takes a long long time! This last step results in the file *stimBOLD_bold.mat*, which contains the st-HRF derived BOLD time series simulation.
 
