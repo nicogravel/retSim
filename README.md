@@ -67,7 +67,7 @@ The synthesized BOLD time series can then be projected onto the *banded-DoubleSe
 
 |<img src="https://github.com/nicogravel/retSim/blob/main/figures/barMap_cortex.png" width=70%>|
 |:--:|
-| **Cortical BOLD response.** Cortical hemodynamic responses to the drifting bar stimuli commonly used in pRF mapping depicted on a flattened cortical reconstruction (using the Freesurfer's *fsaverage*  template). Neuronal responses across cortical sites were approximated using a mean field approximation of retino-cortical inputs, resulting on stimuli-dependent estimates for the neuronal drive in V1, V2 and V3. These estimates are then translated to BOLD activity using an empirically established spatiotemporal hemodynamic response function (st-HRF). [Cick here for video](https://drive.google.com/file/d/13tFxnNaqPVHgYauDXN5xiREETby12mkx/view?usp=sharing).|
+| **Cortical BOLD response.** Cortical hemodynamic responses to the drifting bar stimuli commonly used in pRF mapping depicted on a flattened cortical reconstruction (using the Freesurfer's *fsaverage*  template). Neuronal responses across cortical sites were approximated using a mean field approximation of retino-cortical inputs, resulting on stimuli-dependent estimates for the neuronal drive in V1, V2 and V3. These estimates are then translated to BOLD activity using an empirically established spatiotemporal hemodynamic response function (st-HRF). [Cick here for video](https://drive.google.com/file/d/17JkrsSYfcZkWn2gZsGGb1wURvY_gLqTL/view?usp=sharing).|
 
 
 |<img src="https://github.com/nicogravel/retSim/blob/main/figures/fovConSites.png" width=100%>|
