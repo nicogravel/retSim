@@ -36,7 +36,7 @@ end
 
 % Primary initialization:
 stimBOLD_output = struct;
-params = loadParameters;
+params = loadParameters;  % within loadParameters you will be see what time of HRF is called, in line 42
 
 data_in = VideoReader(fullfile(pwd, filename));
 nFrames = data_in.NumberOfFrames;
@@ -150,8 +150,23 @@ stimBOLD_output.visual_stimulus = visual_stimulus;
 save([out_pth 'stimBOLD_output.mat'],'stimBOLD_output')
 
 
-%% CF field's biophysical simulation 'arena'
+%% Notes:
+% 
+% See line 39 in stimBOLD_wrapper.m,  open loadParameters.m with right click,
+% there you will see what type of HRF is called, in line 42 and 43, as well as
+% hemodynamic parameters used later to compute the st-HRF. Then, these parameters
+% are taken by the function hemodynamicModel.m, called within the line 140 in
+% stimBOLD_wrapper.m.  A mesh connectivity structure and distance matrix is necessary
+% to implement the st-HRF (these are the input 'msh').
+% 
+% Inside hemodynamicModel.m (line 22) you will see which of the functions is called,
+% reflecting on the parameters previously loaded. In my case, it is solve_linhwe_surface.
+% The parameters L and A are for the Laplacian obtained from the mesh.
+% Zeta are the neural inputs.
+% 
+% Hope this helps!
+% 
+% NG
 
-% Here is just the visual sitimulus displayed. 
-interactive_visualization(stimBOLD_output);
+
 
