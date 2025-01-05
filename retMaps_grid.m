@@ -50,7 +50,7 @@ eval(['[V3cartx,V3carty]=',model,'(V3Grid,a,b);']);
 
 
 
-%%
+%% Plor retinotopic maps
 figure,
 pos = get(gcf, 'Position');
 set(gcf, 'Position', [0 0 1200, 400]);
@@ -110,6 +110,3 @@ axis equal, axis off;
 title('polar grid on cortex');
 
 print(gcf, [pth, 'figures\retMaps_', model,  '.png'], '-dpng', '-r150', '-painters')
-
-
-

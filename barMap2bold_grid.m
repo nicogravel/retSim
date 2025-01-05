@@ -124,9 +124,9 @@ pol_v3 = pol(idx_V3);
 
 
 % Match simulated BOLD with algebraic model
-[a_v1, ~] = knnsearch([ecc_v1 pol_v1],complexGrid','dist', distMethod,'NSMethod','exhaustive');
-[a_v2, ~] = knnsearch([ecc_v2 pol_v2],complexGrid','dist', distMethod,'NSMethod','exhaustive');
-[a_v3, ~] = knnsearch([ecc_v3 pol_v3],complexGrid','dist', distMethod,'NSMethod','exhaustive');
+[a_v1, b_v1] = knnsearch([ecc_v1 pol_v1],complexGrid','dist', distMethod,'NSMethod','exhaustive');
+[a_v2, b_v1] = knnsearch([ecc_v2 pol_v2],complexGrid','dist', distMethod,'NSMethod','exhaustive');
+[a_v3, b_v1] = knnsearch([ecc_v3 pol_v3],complexGrid','dist', distMethod,'NSMethod','exhaustive');
 
 c = 0 ;
 clear V1 V2 V3
@@ -296,5 +296,74 @@ ylabel(h, 'BOLD ({\ita.u.})','FontSize',12); h.LineWidth = 1.5;
 set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 1.5);
 print(gcf, [pth, 'figures\stHRF_BOLD_sim_', model,  '.png'], '-dpng', '-r150', '-painters')
 
+
+
+%% Interpolated eccentricity map
+figure,
+pos = get(gcf, 'Position');
+set(gcf, 'Position', [0 0 1200, 1200]);
+set(gcf, 'color', 'w');
+colormap(flipud(jet))
+cX = [V1cartx,V2cartx,V3cartx];
+cY = [V1carty,V2carty,V3carty];
+eccMap =[ecc_v1(a_v1),ecc_v2(a_v2),ecc_v3(a_v3)];
+[B,II,JJ]=unique([cX;cY]','rows');
+eccMap=eccMap(II);
+cX=B(:,1);
+cY=B(:,2);
+lhemi=cY<0;
+t=delaunay(cX(lhemi),cY(lhemi));
+trisurf(t,cX(lhemi),cY(lhemi),zeros(length(cX(lhemi)),1),eccMap(lhemi));
+hold on
+t=delaunay(cX(~lhemi),cY(~lhemi));
+trisurf(t,cX(~lhemi),cY(~lhemi),zeros(length(cX(~lhemi)),1),eccMap(~lhemi));
+rnum =1;
+hh=plot(V1cartx,V1carty,'.');
+set(hh,'color',colors(1,:),'markersize',dotSize);
+hh=plot(V3cartx,V3carty,'.');
+set(hh,'color',colors(3,:),'markersize',dotSize);
+shading flat;
+axis square;
+axis off
+view(0,90);
+h = colorbar('YTickLabel',{'','','',''},...
+    'FontSize',18,'Position',[0.9 .45 .05 .25],'Color','k');
+ylabel(h, 'eccentricity','FontSize',12); h.LineWidth = 1.5;
+set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 1.5);
+print(gcf, [pth, 'figures\interpEcc_', model,  '.png'], '-dpng', '-r150', '-painters')
+
+%% Interpolated polar angle map
+figure,
+pos = get(gcf, 'Position');
+set(gcf, 'Position', [0 0 1200, 1200]);
+set(gcf, 'color', 'w');
+colormap hsv
+cX = [V1cartx,V2cartx,V3cartx];
+cY = [V1carty,V2carty,V3carty];
+polMap =[pol_v1(a_v1),pol_v2(a_v2),pol_v3(a_v3)];
+[B,II,JJ]=unique([cX;cY]','rows');
+polMap=polMap(II);
+cX=B(:,1);
+cY=B(:,2);
+lhemi=cY<0;
+t=delaunay(cX(lhemi),cY(lhemi));
+trisurf(t,cX(lhemi),cY(lhemi),zeros(length(cX(lhemi)),1),polMap(lhemi));
+hold on
+t=delaunay(cX(~lhemi),cY(~lhemi));
+trisurf(t,cX(~lhemi),cY(~lhemi),zeros(length(cX(~lhemi)),1),polMap(~lhemi));
+rnum =1;
+hh=plot(V1cartx,V1carty,'.');
+set(hh,'color',colors(1,:),'markersize',dotSize);
+hh=plot(V3cartx,V3carty,'.');
+set(hh,'color',colors(3,:),'markersize',dotSize);
+shading flat;
+axis square;
+axis off
+view(0,90);
+h = colorbar('YTickLabel',{'','','',''},...
+    'FontSize',18,'Position',[0.9 .45 .05 .25],'Color','k');
+ylabel(h, 'polar angle','FontSize',12); h.LineWidth = 1.5;
+set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 1.5);
+print(gcf, [pth, 'figures\interpPol_', model,  '.png'], '-dpng', '-r150', '-painters')
 
 

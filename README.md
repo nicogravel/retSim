@@ -85,6 +85,12 @@ The synthesized BOLD time series can then be projected onto the *banded-DoubleSe
 |:--:|
 | **Simulated BOLD time series projected onto the banded-DoubleSech model of the V1-V2-V3 foveal confluence.** Hemodynamic wave-like responses to the drifting bar stimuli unfold across the V1-V2-V3 hierarchy by following inter-areal homotopy. [Cick here for video](https://drive.google.com/file/d/13tFxnNaqPVHgYauDXN5xiREETby12mkx/view?usp=sharing).|
 
+|<img src="https://github.com/nicogravel/retSim/blob/main/figures/interpEcc_bandedDoubleSech.png" width=50%><img src="https://github.com/nicogravel/retSim/blob/main/figures/interpPol_bandedDoubleSech.png" width=50%>|
+|:--:|
+| **A little sketchiness results from the K-NN search step to map from the cortex to the model.**.|
+
+
+
 
 
 
