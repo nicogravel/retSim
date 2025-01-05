@@ -1,13 +1,14 @@
 %% Visualization of BOLD time series onto the cortical surface
 %
-%  nicolas gravel, December 2024 
+%  nicolas gravel, December 2024
 
 
-%% Plot cortical reconstruction of BOLD activity 
+%% Plot cortical reconstruction of BOLD activity
 %V1
 R = 1;
 %idx = visualAreas.v1(idx_V1);
 V1= msh.flatCoord(visualAreas.v1(idx_V1),:);
+V1 = [V1(:,1)*-1, V1(:,2)];
 [~,v1] = alphavol(V1,R);
 
 
@@ -15,14 +16,17 @@ V1= msh.flatCoord(visualAreas.v1(idx_V1),:);
 R = 0.15;
 %idx = visualAreas.v2(idx_V2);
 V2  = msh.flatCoord(visualAreas.v2(idx_V2),:);
+V2 = [V2(:,1)*-1, V2(:,2)];
 [L,n] = kmeans(V2,2);
 V2d = [V2(find(L==1),1) V2(find(L==1),2)];
 V2v =[V2(find(L==2),1) V2(find(L==2),2)];
 [~,v2d] = alphavol(V2d,R); [~,v2v] = alphavol(V2v,R);
 
+
 %idx = visualAreas.v3(idx_V3);
-%V3= msh.flatCoord(idx,:); 
+%V3= msh.flatCoord(idx,:);
 V3  = msh.flatCoord(visualAreas.v3(idx_V3),:);
+V3 = [V3(:,1)*-1, V3(:,2)];
 [L,n] = kmeans(V3,2);
 V3d = [V3(find(L==1),1) V3(find(L==1),2)];
 V3v =[V3(find(L==2),1) V3(find(L==2),2)];
@@ -50,14 +54,16 @@ for id = 1:length(bold)
     X =  stimBOLD_output.BOLD(i_frame,:)'; %Y(i_frame,:)';
     X = round(X,rnum);
     %hold on
-    patch('Vertices',msh.flatCoord,'Faces',msh.submesh.triangles.'+1,'FaceColor','interp','FaceVertexCData',msh.submesh.oldColors(1:3,:).'/255,'EdgeColor','none','facealpha',0.5);
-    hold on   
+    coords = msh.flatCoord;
+    coords = [coords(:,1)*-1, coords(:,2)];
+    patch('Vertices',coords,'Faces',msh.submesh.triangles.'+1,'FaceColor','interp','FaceVertexCData',msh.submesh.oldColors(1:3,:).'/255,'EdgeColor','none','facealpha',0.5);
+    hold on
     plot(V1(v1.bnd,1),V1(v1.bnd,2),'k-','LineWidth',2);
     plot(V2d(v2d.bnd,1),V2d(v2d.bnd,2),'k-','LineWidth',2);
     plot(V2v(v2v.bnd,1),V2v(v2v.bnd,2),'k-','LineWidth',2);
     plot(V3d(v3d.bnd,1),V3d(v3d.bnd,2),'k-','LineWidth',2);
     plot(V3v(v3v.bnd,1),V3v(v3v.bnd,2),'k-','LineWidth',2);
-    trisurf(msh.submesh.triangles.'+1, msh.flatCoord(:,1), msh.flatCoord(:,2), zeros(size(msh.flatCoord(:,2),1),1),'facevertexcdata',X,'edgecolor','none','facecolor','flat','facealpha',0.5);
+    trisurf(msh.submesh.triangles.'+1, coords(:,1), coords(:,2), zeros(size(msh.flatCoord(:,2),1),1),'facevertexcdata',X,'edgecolor','none','facecolor','flat','facealpha',0.5);
     colormap(nawhimar)
     lighting gouraud
     axis square;
@@ -74,7 +80,7 @@ for id = 1:length(bold)
 end
 close(v);
 
-%% Cortical reconstruction snapshot 
+%% Cortical reconstruction snapshot
 i_frame = 4301;
 %%
 figure,
@@ -86,17 +92,18 @@ msh = stimBOLD_output.msh;
 rnum = 2
 cxlim =  max(stimBOLD_output.BOLD(:))/20;
 set(gcf,'Renderer','OpenGL');
-X =  stimBOLD_output.BOLD(i_frame,:)'; 
+X =  stimBOLD_output.BOLD(i_frame,:)';
 X = round(X,rnum);
 %hold on
-patch('Vertices',msh.flatCoord,'Faces',msh.submesh.triangles.'+1,'FaceColor','interp','FaceVertexCData',msh.submesh.oldColors(1:3,:).'/255,'EdgeColor','none','facealpha',0.5);
-hold on
+coords = msh.flatCoord;
+coords = [coords(:,1)*-1, coords(:,2)];
+patch('Vertices',coords,'Faces',msh.submesh.triangles.'+1,'FaceColor','interp','FaceVertexCData',msh.submesh.oldColors(1:3,:).'/255,'EdgeColor','none','facealpha',0.5);hold on
 plot(V1(v1.bnd,1),V1(v1.bnd,2),'k-','LineWidth',2);
 plot(V2d(v2d.bnd,1),V2d(v2d.bnd,2),'k-','LineWidth',2);
 plot(V2v(v2v.bnd,1),V2v(v2v.bnd,2),'k-','LineWidth',2);
 plot(V3d(v3d.bnd,1),V3d(v3d.bnd,2),'k-','LineWidth',2);
 plot(V3v(v3v.bnd,1),V3v(v3v.bnd,2),'k-','LineWidth',2);
-trisurf(msh.submesh.triangles.'+1, msh.flatCoord(:,1), msh.flatCoord(:,2), zeros(size(msh.flatCoord(:,2),1),1),'facevertexcdata',X,'edgecolor','none','facecolor','flat','facealpha',0.5);
+trisurf(msh.submesh.triangles.'+1, coords(:,1), coords(:,2), zeros(size(msh.flatCoord(:,2),1),1),'facevertexcdata',X,'edgecolor','none','facecolor','flat','facealpha',0.5);
 colormap(nawhimar)
 lighting gouraud
 axis square;
