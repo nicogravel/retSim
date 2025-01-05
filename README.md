@@ -87,9 +87,7 @@ The synthesized BOLD time series can then be projected onto the *banded-DoubleSe
 
 |<img src="https://github.com/nicogravel/retSim/blob/main/figures/interpEcc_bandedDoubleSech.png" width=50%><img src="https://github.com/nicogravel/retSim/blob/main/figures/interpPol_bandedDoubleSech.png" width=50%>|
 |:--:|
-| **A little sketchiness results from the K-NN search step to map from the cortex to the model.**.|
-
-
+| **Cortex-to-model mapping of simulated BOLD results in a little sketchiness.** The quality of this mapping depends on the distance functions used by the matlab function *knnsearch*.|
 
 
 
