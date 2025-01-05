@@ -15,7 +15,7 @@ switch modelToDemonstrate
     case 3
         model='Schwartz';
 end
-    % basic common Model Parameters:
+% basic common Model Parameters:
 a=0.75; % Foveal pole
 b=90;  % Peripheral pole
 K=18;  % scaling parameter

@@ -10,6 +10,7 @@ In a recent study titled "Hemodynamic Traveling Waves in Human Visual Cortex" **
 
 
 
+
 The goal of this repo is two-fold: 
 
 * As a wrapper for [stimBOLD](https://github.com/KevinAquino/stimBOLD), it aims to make the implementation of the st-HRF accessible and transparent. 
@@ -34,14 +35,14 @@ The goal of this repo is two-fold:
 First, you need Freesurfer in the path. Then you can source it:
   
 ```console
-export FREESURFER_HOME=/home/	.../freesurfer-linux-ubuntu22_amd64-7.4.0/freesurfer
+export FREESURFER_HOME=/home/.../freesurfer-linux-ubuntu22_amd64-7.4.0/freesurfer
 source $FREESURFER_HOME/SetUpFreeSurfer.sh
 ```
   
 Second, start Matlab:
   
 ```console
-'/home/.../../Matlab/bin/matlab'
+'/home/../Matlab/bin/matlab'
 ```
 
 Third, you need to copy the barMap folder (the input stimuli *barMap_whole.avi* must be computed previously using *barMap/inputMaker.m*) within retSim into the folder used by stimBOLD to compute the stimulus-to-BOLD respones in V1, V2 and V3, in terminal:
@@ -52,9 +53,9 @@ cp -r barMap stimBOLD-master/visualStimuli
 
 Fourth, open the script *stimBOLD_wrapper.m* in Matlab and run until line 42. The last line will give you the number of frames in the *barMap_whole.avi* file. A few more frames have been included after all the bar sweeps, to illustrate the residual waves still unfolding after the stimulus have faded out, and as potentially baseline. 
 
-From here onwards, you can go ahead running the scripts in chunks. For instance, first compute the visual inputs (blurring the image according to fixation, lines 68 to 77). Lines 86 to 93 are to load the retinal template and compute the retinal contrast response. Line 102 computes the cortical projection from retina to lateral geniculate nucleus (LGN) to V1. Line 110 computes the neural response in V1 and its retinotopic outputs to V2 and V3. Line 127 calculate the neural drive in V1, V2 and V3. These four steps take relatively little time. Line 136 implements the st-HRF in order to simulate the BOLD response. This last step takes a long long time! This last step results in the file *stimBOLD_bold.mat*, which contains the st-HRF derived BOLD time series simulation.
+From here onwards, you can go ahead running the scripts in chunks. For instance, first compute the visual inputs (blurring the image according to fixation, lines 68 to 77). Lines 86 to 93 are to load the retinal template and compute the retinal contrast response. Line 102 computes the cortical projection from retina to lateral geniculate nucleus (LGN) to V1. Line 110 computes the neural response in V1 and its retinotopic outputs to V2 and V3. Line 127 calculate the neural drive in V1, V2 and V3. These four steps take relatively little time. Line 136 implements the st-HRF in order to simulate the BOLD response. This last step takes a long long time! This last step results in the file *stimBOLD_bold.mat*, which contains the st-HRF derived BOLD time series simulation (this is a large file and has not been included in the repo. It must be recomputed in order to run some scripts).
 
-The synthesized BOLD time series can then be projected onto the *banded-DoubleSech* model of the foveal confluence **[5]** using the *barMap2bold_grid.m* script. This scripts uses the previosuly created file *stimBOLD_bold.mat* as input and matches it to the *banded-DoubleSech*.
+The synthesized BOLD time series can then be projected onto the *banded-DoubleSech* model of the foveal confluence **[5]** using the *barMap2bold_grid.m* script. This scripts uses the previously created file *stimBOLD_bold.mat* as input and matches it to the *banded-DoubleSech*. For a detailed account of the model see [here](https://github.com/nicogravel/retSim/blob/main/tools/fovealConf/DemoSchiraEtal2009.m)
 
 > Examples:
 
@@ -67,12 +68,12 @@ The synthesized BOLD time series can then be projected onto the *banded-DoubleSe
 
 |<img src="https://github.com/nicogravel/retSim/blob/main/figures/barMap_cortex.png" width=70%>|
 |:--:|
-| **Cortical BOLD response.** Cortical hemodynamic responses to the drifting bar stimuli commonly used in pRF mapping depicted on a flattened cortical reconstruction (using the Freesurfer's *fsaverage*  template). Neuronal responses across cortical sites were approximated using a mean field approximation of retino-cortical inputs, resulting on stimuli-dependent estimates for the neuronal drive in V1, V2 and V3. These estimates are then translated to BOLD activity using an empirically established spatiotemporal hemodynamic response function (st-HRF). [Cick here for video](https://drive.google.com/file/d/17JkrsSYfcZkWn2gZsGGb1wURvY_gLqTL/view?usp=sharing).|
+| **Cortical BOLD response.** Flattened cortical reconstruction showing  cortical hemodynamic responses to the drifting bar stimuli commonly used in pRF mapping (depicted on a flattened cortical reconstruction using the Freesurfer's *fsaverage*  template) and visual cortical maps V1, V2 and V3 (black outlines). Within each of these maps, nearby neurons respond to nearby locations in the visual image, with this property (receptive fields) extending along cortical hierarchy. Neuronal responses across cortical sites were approximated using a mean field approximation of retino-cortical inputs, resulting on stimuli-dependent estimates for the neuronal drive in V1, V2 and V3. These estimates are then translated to BOLD activity using an empirically established spatiotemporal hemodynamic response function (st-HRF). [Click here for video](https://drive.google.com/file/d/17JkrsSYfcZkWn2gZsGGb1wURvY_gLqTL/view?usp=sharing).|
 
 
-|<img src="https://github.com/nicogravel/retSim/blob/main/figures/fovConSites.png" width=100%>|
+|<img src="https://github.com/nicogravel/retSim/blob/main/figures/retMaps_bandedDoubleSech.png" width=100%>|
 |:--:|
-| **V1, V2 and V3 sites cluster around the foveal confluence.**|
+| **V1, V2 and V3 sites cluster around the foveal confluence.**  For V1, V2 and V3, left and right halves of the visual field project to opposite cortical hemispheres, with visual field selectivity inverted across the horizontal meridian. Furthermore, V2 and V3 are split into dorsal and ventral quarterfields, each containing an inverted representation of the upper and lower visual field. The organization of early visual cortical maps V1, V2 and V3 cluster around a single foveal representation can be described using an banded 2D model that accounts for retinotopy, cortical magnification and anisotropy.|
 
 
 |<img src="https://github.com/nicogravel/retSim/blob/main/figures/tSeries_bandedDoubleSech.png" width=100%>|
