@@ -125,8 +125,8 @@ pol_v3 = pol(idx_V3);
 
 % Match simulated BOLD with algebraic model
 [a_v1, b_v1] = knnsearch([ecc_v1 pol_v1],complexGrid','dist', distMethod,'NSMethod','exhaustive');
-[a_v2, b_v1] = knnsearch([ecc_v2 pol_v2],complexGrid','dist', distMethod,'NSMethod','exhaustive');
-[a_v3, b_v1] = knnsearch([ecc_v3 pol_v3],complexGrid','dist', distMethod,'NSMethod','exhaustive');
+[a_v2, b_v2] = knnsearch([ecc_v2 pol_v2],complexGrid','dist', distMethod,'NSMethod','exhaustive');
+[a_v3, b_v3] = knnsearch([ecc_v3 pol_v3],complexGrid','dist', distMethod,'NSMethod','exhaustive');
 
 c = 0 ;
 clear V1 V2 V3
@@ -297,8 +297,9 @@ set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 
 print(gcf, [pth, 'figures\stHRF_BOLD_sim_', model,  '.png'], '-dpng', '-r150', '-painters')
 
 
+%% Quality check I:  cortex2model mapping using knnsearch and euclidean distance
 
-%% Interpolated eccentricity map
+% eccentricity map
 figure,
 pos = get(gcf, 'Position');
 set(gcf, 'Position', [0 0 1200, 1200]);
@@ -332,7 +333,7 @@ ylabel(h, 'eccentricity','FontSize',12); h.LineWidth = 1.5;
 set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 1.5);
 print(gcf, [pth, 'figures\interpEcc_', model,  '.png'], '-dpng', '-r150', '-painters')
 
-%% Interpolated polar angle map
+% polar angle map
 figure,
 pos = get(gcf, 'Position');
 set(gcf, 'Position', [0 0 1200, 1200]);
@@ -365,5 +366,146 @@ h = colorbar('YTickLabel',{'','','',''},...
 ylabel(h, 'polar angle','FontSize',12); h.LineWidth = 1.5;
 set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 1.5);
 print(gcf, [pth, 'figures\interpPol_', model,  '.png'], '-dpng', '-r150', '-painters')
+
+
+%% Test I:  cortex2model mapping using custom k-nearest neighbors search on polar angle distances
+figure,
+pos = get(gcf, 'Position');
+set(gcf, 'Position', [0 0 1200, 400]);
+set(gcf, 'color', 'w');
+subplot 141
+hold on;
+polar(V1Grid(2,:),V1Grid(1,:),'.k');
+polar(V2Grid(2,:),V2Grid(1,:),'r.');
+polar(V3Grid(2,:),V3Grid(1,:),'b.');
+axis equal; axis off
+subplot 142
+polar(pol_v1, ecc_v1,'.k');
+axis equal; axis off
+subplot 143
+polar(pol_v2, ecc_v2,'r.');
+axis equal; axis off
+subplot 144
+polar(pol_v3, ecc_v3,'b.');
+axis equal
+
+
+distMethod = @retDist; % polar distance
+% Match simulated BOLD with algebraic model
+clear a_v1 a_v2 a_v3
+ecc_a = ecc_v1;
+pol_a = pol_v1;
+ecc_b =V1Grid(1,:); %ecc_v1;
+pol_b = V1Grid(2,:); %pol_v1;
+for i_dist = 1:length(V1Grid)
+    for j_dist = 1:length(V1Grid)
+        dist(i_dist, j_dist) = sqrt(ecc_a(i_dist).^2 + ecc_b(j_dist).^2 - 2.*ecc_a(i_dist).*ecc_b(j_dist).*cos(pol_a(i_dist) - pol_b(j_dist)))';
+    end
+end
+% figure, 
+% imagesc(dist)
+% axis equal; axis off
+for i_dist = 1:length(V1Grid)
+    [~,a_v1(i_dist)] = min(dist(:,i_dist));
+end
+ecc_a = ecc_v2;
+pol_a = pol_v2;
+ecc_b =V1Grid(1,:); 
+pol_b = V1Grid(2,:); 
+for i_dist = 1:length(V1Grid)
+    for j_dist = 1:length(V1Grid)
+        dist(i_dist, j_dist) = sqrt(ecc_a(i_dist).^2 + ecc_b(j_dist).^2 - 2.*ecc_a(i_dist).*ecc_b(j_dist).*cos(pol_a(i_dist) - pol_b(j_dist)))';
+    end
+end
+% figure, 
+% imagesc(dist)
+% axis equal; axis off
+for i_dist = 1:length(V1Grid)
+    [~,a_v2(i_dist)] = min(dist(:,i_dist));
+end
+ecc_a = ecc_v3;
+pol_a = pol_v3;
+ecc_b =V1Grid(1,:);
+pol_b = V1Grid(2,:);
+for i_dist = 1:length(V1Grid)
+    for j_dist = 1:length(V1Grid)
+        dist(i_dist, j_dist) = sqrt(ecc_a(i_dist).^2 + ecc_b(j_dist).^2 - 2.*ecc_a(i_dist).*ecc_b(j_dist).*cos(pol_a(i_dist) - pol_b(j_dist)))';
+    end
+end
+% figure, 
+% imagesc(dist)
+% axis equal; axis off
+for i_dist = 1:length(V1Grid)
+    [~,a_v3(i_dist)] = min(dist(:,i_dist));
+end
+
+
+% Interpolated eccentricity map
+figure,
+pos = get(gcf, 'Position');
+set(gcf, 'Position', [0 0 1200, 1200]);
+set(gcf, 'color', 'w');
+colormap(flipud(jet))
+cX = [V1cartx,V2cartx,V3cartx];
+cY = [V1carty,V2carty,V3carty];
+eccMap =[ecc_v1(a_v1),ecc_v2(a_v2),ecc_v3(a_v3)];
+[B,II,JJ]=unique([cX;cY]','rows');
+eccMap=eccMap(II);
+cX=B(:,1);
+cY=B(:,2);
+lhemi=cY<0;
+t=delaunay(cX(lhemi),cY(lhemi));
+trisurf(t,cX(lhemi),cY(lhemi),zeros(length(cX(lhemi)),1),eccMap(lhemi));
+hold on
+t=delaunay(cX(~lhemi),cY(~lhemi));
+trisurf(t,cX(~lhemi),cY(~lhemi),zeros(length(cX(~lhemi)),1),eccMap(~lhemi));
+rnum =1;
+hh=plot(V1cartx,V1carty,'.');
+set(hh,'color',colors(1,:),'markersize',dotSize);
+hh=plot(V3cartx,V3carty,'.');
+set(hh,'color',colors(3,:),'markersize',dotSize);
+shading flat;
+axis square;
+axis off
+view(0,90);
+h = colorbar('YTickLabel',{'','','',''},...
+    'FontSize',18,'Position',[0.9 .45 .05 .25],'Color','k');
+ylabel(h, 'eccentricity','FontSize',12); h.LineWidth = 1.5;
+set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 1.5);
+print(gcf, [pth, 'figures\interpEcc_', model,  '_polDist.png'], '-dpng', '-r150', '-painters')
+
+% Interpolated polar angle map
+figure,
+pos = get(gcf, 'Position');
+set(gcf, 'Position', [0 0 1200, 1200]);
+set(gcf, 'color', 'w');
+colormap hsv
+cX = [V1cartx,V2cartx,V3cartx];
+cY = [V1carty,V2carty,V3carty];
+polMap =[pol_v1(a_v1),pol_v2(a_v2),pol_v3(a_v3)];
+[B,II,JJ]=unique([cX;cY]','rows');
+polMap=polMap(II);
+cX=B(:,1);
+cY=B(:,2);
+lhemi=cY<0;
+t=delaunay(cX(lhemi),cY(lhemi));
+trisurf(t,cX(lhemi),cY(lhemi),zeros(length(cX(lhemi)),1),polMap(lhemi));
+hold on
+t=delaunay(cX(~lhemi),cY(~lhemi));
+trisurf(t,cX(~lhemi),cY(~lhemi),zeros(length(cX(~lhemi)),1),polMap(~lhemi));
+rnum =1;
+hh=plot(V1cartx,V1carty,'.');
+set(hh,'color',colors(1,:),'markersize',dotSize);
+hh=plot(V3cartx,V3carty,'.');
+set(hh,'color',colors(3,:),'markersize',dotSize);
+shading flat;
+axis square;
+axis off
+view(0,90);
+h = colorbar('YTickLabel',{'','','',''},...
+    'FontSize',18,'Position',[0.9 .45 .05 .25],'Color','k');
+ylabel(h, 'polar angle','FontSize',12); h.LineWidth = 1.5;
+set(findobj(gcf,'type','axes'),'FontName','Arial', 'FontSize', 14, 'LineWidth', 1.5);
+print(gcf, [pth, 'figures\interpPol_', model,  '_polDist.png'], '-dpng', '-r150', '-painters')
 
 

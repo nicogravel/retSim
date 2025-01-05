@@ -41,12 +41,17 @@ colors=[1 0 0; 0 1 0; 0 0 1];
 
 complexGrid=makeVisualGrid(minEcc,maxEcc,isoEccRings,isoPolarRays,resolution);
 
+size(complexGrid)
+
 [V1Grid,V2Grid,V3Grid]=assembleV1V3Complex(complexGrid,[V1linShear,V2linShear,V3linShear],0);
+
+size(V1Grid)
 
 %executing the model
 eval(['[V1cartx,V1carty]=',model,'(V1Grid,a,b);']);
 eval(['[V2cartx,V2carty]=',model,'(V2Grid,a,b);']);
 eval(['[V3cartx,V3carty]=',model,'(V3Grid,a,b);']);
+
 
 
 
